@@ -162,10 +162,50 @@ built; the lazily loaded Mechanics section uses it.
 | `/launch`      | the three-step wizard that deploys a market                    |
 | `/manage`      | the markets the connected address created                      |
 
-`createBrowserRouter` with real paths, so **your host needs an SPA fallback**:
-every unknown path must serve `index.html`, or a refresh on `/markets` returns
-a 404 from the server. On Netlify that is a `_redirects` line, on Vercel a
-rewrite, on nginx `try_files $uri /index.html`.
+`createBrowserRouter` with real paths, so the host needs an SPA fallback: every
+unknown path must serve `index.html`, or a refresh on `/markets` returns a 404
+from the server. That is already handled for Netlify in `netlify.toml` and
+`public/_redirects`. On Vercel it is a rewrite, on nginx `try_files $uri
+/index.html`.
+
+## Deploying to Netlify
+
+`netlify.toml` already carries the build command, the publish directory, the SPA
+fallback and cache headers, so Netlify needs no build settings typed by hand.
+
+1. In Netlify, **Add new site → Import an existing project → GitHub**, and pick
+   `Trixen-AI/yield`.
+2. Leave the build settings alone. Netlify reads `netlify.toml`: build command
+   `npm run build`, publish directory `dist`, Node 22.
+3. Open **Site configuration → Environment variables** and add the values below.
+   `.env` is gitignored, so nothing reaches Netlify from the repo.
+4. Deploy. Every push to `main` redeploys from then on.
+
+### Environment variables to set in Netlify
+
+| Variable                       | Value                                        | Needed for               |
+| ------------------------------ | -------------------------------------------- | ------------------------ |
+| `VITE_REOWN_PROJECT_ID`        | your id from cloud.reown.com                 | opening the wallet modal |
+| `VITE_CHAIN_ID`                | `4663`                                       | naming the network       |
+| `VITE_CHAIN_NAME`              | `Robinhood Chain`                            | labels                   |
+| `VITE_CHAIN_RPC_URL`           | `https://rpc.mainnet.chain.robinhood.com`    | reads, switching network |
+| `VITE_CHAIN_EXPLORER_URL`      | `https://robinhoodchain.blockscout.com`      | explorer links           |
+| `VITE_CHAIN_CURRENCY_NAME`     | `Ether`                                      | wallet display           |
+| `VITE_CHAIN_CURRENCY_SYMBOL`   | `ETH`                                        | wallet display           |
+| `VITE_CHAIN_CURRENCY_DECIMALS` | `18`                                         | wallet display           |
+| `VITE_FACTORY_ADDRESS`         | the deployed factory                         | building transactions    |
+| `VITE_SITE_URL`                | your live URL, e.g. `https://harvestpad.xyz` | wallet metadata          |
+
+Two notes that will bite otherwise:
+
+- **Vite inlines `VITE_*` at build time, not at run time.** Changing a variable
+  in Netlify does nothing until you trigger a redeploy.
+- **Anything named `VITE_*` ships to the browser.** That is correct for all of
+  the above, since a Reown project id and an RPC URL are public by design. Never
+  put a private key or an API secret behind a `VITE_` name.
+
+Add the deployed URL to your Reown project's allowed domains, or the modal will
+refuse to open in production.
 
 ## State: why Zustand and not Redux
 
