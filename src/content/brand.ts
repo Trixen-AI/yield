@@ -80,8 +80,6 @@ export const links = {
   explorerLens: 'https://robinhoodchain.blockscout.com/address/0x61C99360',
   explorerHome: 'https://robinhoodchain.blockscout.com',
   sourceCode: 'https://github.com/Trixen-AI/yield',
-  /** GUESS: the docs host is unconfirmed. */
-  docs: 'https://docs.harvestpad.org',
   social: 'https://x.com/HarvestPad',
   socialLabel: 'HarvestPad on X',
 } as const

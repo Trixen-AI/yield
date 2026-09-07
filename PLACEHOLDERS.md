@@ -18,27 +18,26 @@ The logo is drawn twice and the two must stay in sync: `LogoGlyph` in
 ## Confirm these before launch
 
 These values were filled in from the project name and from the original copy.
-The ones marked GUESS were never confirmed and are almost certainly wrong.
+The Status column says how far each one has been verified.
 
-| Value             | Currently                                 | Status                     |
-| ----------------- | ----------------------------------------- | -------------------------- |
-| Product name      | HarvestPad                                | confirmed                  |
-| Chain             | Robinhood Chain                           | from the original copy     |
-| Gas symbol        | ETH                                       | from the original copy     |
-| Launch fee        | 0.001 ETH                                 | from the original copy     |
-| Settlement asset  | USDG                                      | from the original copy     |
-| Factory address   | `0x61C9…9359`                             | from the original copy     |
-| Vault contract    | HarvestVault                              | renamed from YieldVault    |
-| Factory contract  | HarvestPad factory                        | renamed                    |
-| Lens contract     | HarvestPad lens                           | renamed                    |
-| Featured source   | Steakhouse USDG, ERC-4626, 430 M USDG     | from the original copy     |
-| Explorer name     | "the explorer"                            | **GUESS**                  |
-| Explorer URLs     | `https://explorer.robinhood.chain/...`    | **GUESS**, domain invented |
-| Source code       | `https://github.com/harvestpad/contracts` | **GUESS**                  |
-| Docs              | `https://docs.harvestpad.org`             | **GUESS**                  |
-| Social            | `https://x.com/harvestpad`                | **GUESS**                  |
-| Site URL (OG tag) | `https://harvestpad.org`                  | **GUESS**                  |
-| App routes        | `/launch`, `/markets`, `/manage`          | no router exists yet       |
+| Value             | Currently                               | Status                           |
+| ----------------- | --------------------------------------- | -------------------------------- |
+| Product name      | HarvestPad                              | confirmed                        |
+| Chain             | Robinhood Chain, id 4663                | confirmed, see src/lib/env.ts    |
+| Gas symbol        | ETH, 18 decimals                        | confirmed, Arbitrum Orbit rollup |
+| Launch fee        | 0.001 ETH                               | from the original copy           |
+| Settlement asset  | USDG                                    | from the original copy           |
+| Factory address   | `0x61C9…9359`                           | from the original copy           |
+| Vault contract    | HarvestVault                            | renamed from YieldVault          |
+| Factory contract  | HarvestPad factory                      | renamed                          |
+| Lens contract     | HarvestPad lens                         | renamed                          |
+| Featured source   | Steakhouse USDG, ERC-4626, 430 M USDG   | from the original copy           |
+| Explorer name     | Blockscout                              | confirmed                        |
+| Explorer URLs     | `https://robinhoodchain.blockscout.com` | domain confirmed, addresses not  |
+| Source code       | `https://github.com/Trixen-AI/yield`    | confirmed                        |
+| Social            | `https://x.com/HarvestPad`              | set by you, handle unverified    |
+| Site URL (OG tag) | `https://harvestpad.org`                | confirmed                        |
+| App routes        | `/launch`, `/markets`, `/manage`        | live, see src/router.tsx         |
 
 The explorer URLs also carry invented contract addresses. Replace the whole
 `links` object once the real deployment exists.
