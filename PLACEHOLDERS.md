@@ -35,9 +35,9 @@ The ones marked GUESS were never confirmed and are almost certainly wrong.
 | Explorer name     | "the explorer"                            | **GUESS**                  |
 | Explorer URLs     | `https://explorer.robinhood.chain/...`    | **GUESS**, domain invented |
 | Source code       | `https://github.com/harvestpad/contracts` | **GUESS**                  |
-| Docs              | `https://docs.harvestpad.xyz`             | **GUESS**                  |
+| Docs              | `https://docs.harvestpad.org`             | **GUESS**                  |
 | Social            | `https://x.com/harvestpad`                | **GUESS**                  |
-| Site URL (OG tag) | `https://harvestpad.xyz`                  | **GUESS**                  |
+| Site URL (OG tag) | `https://harvestpad.org`                  | **GUESS**                  |
 | App routes        | `/launch`, `/markets`, `/manage`          | no router exists yet       |
 
 The explorer URLs also carry invented contract addresses. Replace the whole

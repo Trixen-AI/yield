@@ -6,35 +6,29 @@ import { createConfig, http, type Config } from 'wagmi'
 import { injected } from 'wagmi/connectors'
 import { mainnet } from 'viem/chains'
 
-import { env, networkDefined, walletReady } from '@/lib/env'
+import { env, walletReady } from '@/lib/env'
 
 /**
  * Wallet wiring.
  *
- * Connecting only needs the Reown project id. When our own chain is defined as
- * well, AppKit is bound to it; when it is not, the modal still opens on Ethereum
- * mainnet so someone can connect, see their address and look around. Reads and
- * transactions stay gated on `chainReady` and `factoryReady` separately.
+ * The chain is fixed in `lib/env.ts`, so the only thing a deploy has to supply
+ * is the Reown project id. With it, AppKit is bound to Robinhood Chain and the
+ * modal detects wallets and offers WalletConnect for mobile.
  *
- * With no project id at all this returns a plain wagmi config, so every hook in
- * the app keeps working and nothing crashes.
+ * Without it this returns a plain wagmi config on an inert chain, so every hook
+ * in the app keeps working and nothing crashes; the connect button says it is
+ * unavailable rather than opening a modal that cannot work.
  */
 
-export const appChain = networkDefined
-  ? defineChain({
-      id: env.chainId,
-      caipNetworkId: `eip155:${env.chainId}`,
-      chainNamespace: 'eip155',
-      name: env.chainName,
-      nativeCurrency: env.currency,
-      // Empty until VITE_CHAIN_RPC_URL is set. The network is still named
-      // correctly in the modal; adding it to a wallet needs the URL.
-      rpcUrls: { default: { http: env.rpcUrl ? [env.rpcUrl] : [] } },
-      ...(env.explorerUrl
-        ? { blockExplorers: { default: { name: 'Explorer', url: env.explorerUrl } } }
-        : {}),
-    })
-  : undefined
+export const appChain = defineChain({
+  id: env.chainId,
+  caipNetworkId: `eip155:${env.chainId}`,
+  chainNamespace: 'eip155',
+  name: env.chainName,
+  nativeCurrency: env.currency,
+  rpcUrls: { default: { http: [env.rpcUrl] } },
+  blockExplorers: { default: { name: 'Blockscout', url: env.explorerUrl } },
+})
 
 function buildConfig(): { wagmiConfig: Config; appKitReady: boolean } {
   if (!walletReady) {
@@ -50,10 +44,7 @@ function buildConfig(): { wagmiConfig: Config; appKitReady: boolean } {
     }
   }
 
-  // Mainnet stands in only while VITE_CHAIN_ID is empty. It is there so the
-  // modal has a network to work with; nothing is ever read from it. This is why
-  // an unconfigured app shows "Ethereum" in the network switcher.
-  const networks: [AppKitNetwork, ...AppKitNetwork[]] = appChain ? [appChain] : [mainnet]
+  const networks: [AppKitNetwork, ...AppKitNetwork[]] = [appChain]
 
   const adapter = new WagmiAdapter({
     networks,

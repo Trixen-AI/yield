@@ -183,28 +183,33 @@ fallback and cache headers, so Netlify needs no build settings typed by hand.
 
 ### Environment variables to set in Netlify
 
-| Variable                       | Value                                        | Needed for               |
-| ------------------------------ | -------------------------------------------- | ------------------------ |
-| `VITE_REOWN_PROJECT_ID`        | your id from cloud.reown.com                 | opening the wallet modal |
-| `VITE_CHAIN_ID`                | `4663`                                       | naming the network       |
-| `VITE_CHAIN_NAME`              | `Robinhood Chain`                            | labels                   |
-| `VITE_CHAIN_RPC_URL`           | `https://rpc.mainnet.chain.robinhood.com`    | reads, switching network |
-| `VITE_CHAIN_EXPLORER_URL`      | `https://robinhoodchain.blockscout.com`      | explorer links           |
-| `VITE_CHAIN_CURRENCY_NAME`     | `Ether`                                      | wallet display           |
-| `VITE_CHAIN_CURRENCY_SYMBOL`   | `ETH`                                        | wallet display           |
-| `VITE_CHAIN_CURRENCY_DECIMALS` | `18`                                         | wallet display           |
-| `VITE_FACTORY_ADDRESS`         | the deployed factory                         | building transactions    |
-| `VITE_SITE_URL`                | your live URL, e.g. `https://harvestpad.xyz` | wallet metadata          |
+Only one is required.
+
+| Variable                | Value                        | Required                        |
+| ----------------------- | ---------------------------- | ------------------------------- |
+| `VITE_REOWN_PROJECT_ID` | your id from cloud.reown.com | **yes**, or no wallet modal     |
+| `VITE_SITE_URL`         | `https://harvestpad.org`     | no, this is already the default |
+| `VITE_FACTORY_ADDRESS`  | the deployed factory         | no, until you want transactions |
+
+Robinhood Chain's parameters (chain id 4663, RPC, explorer, ETH at 18 decimals)
+are fixed in `src/lib/env.ts` rather than in the environment. They are public
+and they do not change, so keeping them in version control means they cannot be
+forgotten on a new deploy. `VITE_CHAIN_*` still overrides any of them if you
+ever need a build pointed at the testnet.
+
+With only the project id set, the site is fully live and a wallet connects to
+Robinhood Chain. The launch and deposit forms validate but stop short of
+building a transaction, and say so plainly, until the factory address exists.
 
 Two notes that will bite otherwise:
 
 - **Vite inlines `VITE_*` at build time, not at run time.** Changing a variable
   in Netlify does nothing until you trigger a redeploy.
-- **Anything named `VITE_*` ships to the browser.** That is correct for all of
-  the above, since a Reown project id and an RPC URL are public by design. Never
-  put a private key or an API secret behind a `VITE_` name.
+- **Anything named `VITE_*` ships to the browser.** That is correct for a Reown
+  project id, which is public by design. Never put a private key or an API
+  secret behind a `VITE_` name.
 
-Add the deployed URL to your Reown project's allowed domains, or the modal will
+Add `harvestpad.org` to your Reown project's allowed domains, or the modal will
 refuse to open in production.
 
 ## State: why Zustand and not Redux

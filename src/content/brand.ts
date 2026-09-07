@@ -79,9 +79,9 @@ export const links = {
   explorerFactory: 'https://robinhoodchain.blockscout.com/address/0x61C99359',
   explorerLens: 'https://robinhoodchain.blockscout.com/address/0x61C99360',
   explorerHome: 'https://robinhoodchain.blockscout.com',
-  /** GUESS: repository, docs and social handles are unconfirmed. */
-  sourceCode: 'https://github.com/harvestpad/contracts',
-  docs: 'https://docs.harvestpad.xyz',
+  sourceCode: 'https://github.com/Trixen-AI/yield',
+  /** GUESS: the docs host is unconfirmed. */
+  docs: 'https://docs.harvestpad.org',
   social: 'https://x.com/HarvestPad',
   socialLabel: 'HarvestPad on X',
 } as const

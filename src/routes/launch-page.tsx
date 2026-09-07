@@ -7,7 +7,7 @@ import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { Textarea } from '@/components/ui/textarea'
 import { brand, chain, economics, featuredSource } from '@/content/brand'
-import { chainReady, env, factoryReady } from '@/lib/env'
+import { env, factoryReady } from '@/lib/env'
 import { cn } from '@/lib/utils'
 import {
   stepErrors,
@@ -69,13 +69,11 @@ export function LaunchPage() {
 
   const blocker = !canConnect
     ? 'Wallet connection is not available yet.'
-    : !chainReady
+    : !factoryReady
       ? 'This market is not open for transactions yet.'
-      : !factoryReady
-        ? 'This market is not open for transactions yet.'
-        : !draftClean
-          ? 'Some fields still need fixing.'
-          : null
+      : !draftClean
+        ? 'Some fields still need fixing.'
+        : null
 
   return (
     <Container>

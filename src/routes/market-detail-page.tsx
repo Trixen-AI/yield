@@ -11,7 +11,7 @@ import { Label } from '@/components/ui/label'
 import { Tabs, TabsList, TabsTrigger } from '@/components/ui/tabs'
 import { economics } from '@/content/brand'
 import { marketPair, formatApy, formatAmount, custodyLabel, marketRows } from '@/content/markets'
-import { chainReady, env, factoryReady } from '@/lib/env'
+import { env, factoryReady } from '@/lib/env'
 import { useWallet } from '@/wallet/use-wallet'
 
 function ActionPanel({ symbol }: { symbol: string }) {
@@ -29,13 +29,11 @@ function ActionPanel({ symbol }: { symbol: string }) {
       ? null
       : onWrongChain
         ? null
-        : !chainReady
+        : !factoryReady
           ? 'This market is not open for transactions yet.'
-          : !factoryReady
-            ? 'This market is not open for transactions yet.'
-            : !amountValid
-              ? 'Enter an amount above zero.'
-              : null
+          : !amountValid
+            ? 'Enter an amount above zero.'
+            : null
 
   return (
     <div className="rounded-2xl p-6 neu-raised md:p-7">

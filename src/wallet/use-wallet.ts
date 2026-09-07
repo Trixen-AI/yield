@@ -1,6 +1,6 @@
 import { useCallback } from 'react'
 
-import { chainReady, env, walletReady } from '@/lib/env'
+import { env, walletReady } from '@/lib/env'
 import { useWalletStore } from '@/store/use-wallet-store'
 
 /**
@@ -29,9 +29,7 @@ export function useWallet() {
     connect,
     disconnect,
     switchToAppChain,
-    // Only meaningful once our own chain is defined; before that the modal
-    // connects on a stand-in network and there is nothing to switch to.
-    onWrongChain: chainReady && isConnected && ready && chainId !== env.chainId,
+    onWrongChain: isConnected && ready && chainId !== env.chainId,
     /** False when Reown or the chain is not configured yet. */
     canConnect: walletReady,
   }
