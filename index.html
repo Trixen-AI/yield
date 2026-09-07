@@ -1,0 +1,53 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+
+    <!-- Title, description and OG tags. Keep in sync with src/content/brand.ts. -->
+    <title>HarvestPad: permissionless yield markets on Robinhood Chain</title>
+    <meta
+      name="description"
+      content="HarvestPad is a factory for yield markets on Robinhood Chain. Describe a strategy, deploy a standalone vault in one transaction, and let anyone deposit."
+    />
+    <meta name="theme-color" content="#E8EBF0" media="(prefers-color-scheme: light)" />
+    <meta name="theme-color" content="#262B33" media="(prefers-color-scheme: dark)" />
+
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="HarvestPad: permissionless yield markets" />
+    <meta
+      property="og:description"
+      content="Launch a yield market in one transaction. No listing queue, no curation, no admin key."
+    />
+    <meta property="og:url" content="https://harvestpad.xyz" />
+    <meta name="twitter:card" content="summary_large_image" />
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500&family=Inter:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <!-- Applies the stored theme before first paint so there is no flash. -->
+    <script>
+      ;(function () {
+        try {
+          var stored = localStorage.getItem('theme')
+          var dark =
+            stored === 'dark' ||
+            ((!stored || stored === 'system') &&
+              window.matchMedia('(prefers-color-scheme: dark)').matches)
+          document.documentElement.classList.toggle('dark', dark)
+          document.documentElement.style.colorScheme = dark ? 'dark' : 'light'
+        } catch (e) {
+          /* storage blocked; the app applies the theme on mount instead */
+        }
+      })()
+    </script>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>
